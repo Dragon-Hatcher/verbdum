@@ -95,6 +95,16 @@ function shakeWord(wordNumber: number) {
     }
 }
 
+const flipGap = 250;
+const bounceGap = 100;
+
+function bounceWord(wordNumber: number) {
+    for (let i = 0; i < 5; i++) {
+        let letterElement = getLetterElement(wordNumber, i);
+        setTimeout(() => letterElement.setAttribute("data-animation", "bounce"), bounceGap * i);
+    }
+}
+
 function setClueForLetter(wordNumber: number, letterNumber: number, letterValue: string, clue: "correct" | "present" | "absent") {
     let letterElement = getLetterElement(wordNumber, letterNumber);
     letterElement.setAttribute("data-animation", "flip");
@@ -102,7 +112,7 @@ function setClueForLetter(wordNumber: number, letterNumber: number, letterValue:
         letterElement.textContent = letterValue.toUpperCase();
         letterElement.classList.add(clue);
         setKeyboardKeyState(letterValue, clue);
-    }, 250);
+    }, flipGap);
 }
 
 function guessWordInRow(word: string, answer: string, row: number, isInitialLoad: boolean = false) {
@@ -115,7 +125,13 @@ function guessWordInRow(word: string, answer: string, row: number, isInitialLoad
     window.pastGuesses.push(word);
     if (!isInitialLoad) {
         appendGuess(window.currentlyPlayingId, word);
-        if (word == answer || row == 5) updateStatsFromSolve();
+        if (word == answer || row == 5) {
+            updateStatsFromSolve();
+            if(!isInitialLoad) {
+                setTimeout(() => toastWithMessage(`congrats-${window.pastGuesses.length}`), flipGap * 5 + 550);
+                setTimeout(() => bounceWord(window.pastGuesses.length - 1), flipGap * 5 + 550);
+            }
+        }
     }
     window.currentWordNumber++;
     window.currentLetterNumber = 0;

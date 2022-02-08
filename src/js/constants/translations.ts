@@ -87,5 +87,29 @@ export const translations: TranslationSet = {
     "toast-too-few-letters": {
         "english": "Not enough letters.",
         "latin": "Non satis litterarum.",
-    }
+    },
+    "congrats-1": {
+        "english": "Genius!",
+        "latin": "Optime!",
+    },
+    "congrats-2": {
+        "english": "Magnificent!",
+        "latin": "Pulcherrime!",
+    },
+    "congrats-3": {
+        "english": "Impressive!",
+        "latin": "Macte!",
+    },
+    "congrats-4": {
+        "english": "Splendid!",
+        "latin": "Sophos!",
+    },
+    "congrats-5": {
+        "english": "Great!",
+        "latin": "Bene!",
+    },
+    "congrats-6": {
+        "english": "Phew!",
+        "latin": "Euge!",
+    },
 };

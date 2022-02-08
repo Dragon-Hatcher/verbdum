@@ -1,5 +1,6 @@
 import {loadGameForDate, updateStatsPage} from "./game";
 import {loadPreferredLanguage, translatePage} from "./translate";
+import {showHelpModal} from "./modal";
 
 function startTimer(duration, display) {
     let start = Date.now(),
@@ -43,7 +44,15 @@ function getSecondsTillTomorrow(): number {
     return Math.round(diff / 1000); // convert to seconds
 }
 
+function checkShouldShowHelp() {
+    if (localStorage.getItem("first-visit") == null) {
+        localStorage.setItem("first-visit", "true");
+        showHelpModal();
+    }
+}
+
 loadGameForDate(new Date());
 updateStatsPage();
 startTimer(getSecondsTillTomorrow(), document.getElementById("countdown-timer"));
 loadPreferredLanguage();
+checkShouldShowHelp();

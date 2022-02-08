@@ -112,4 +112,8 @@ export const translations: TranslationSet = {
         "english": "Phew!",
         "latin": "Euge!",
     },
+    "answer-was": {
+        "english": "The word was: ",
+        "latin": "Verbum erat: "
+    }
 };

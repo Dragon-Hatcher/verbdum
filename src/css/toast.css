@@ -15,7 +15,9 @@
     font-weight: bold;
 
     pointer-events: none;
+}
 
+.toast-fade {
     animation: toast-fade-out 4s;
 }
 

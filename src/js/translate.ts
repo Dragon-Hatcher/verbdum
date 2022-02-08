@@ -2,6 +2,7 @@ import {translations} from "./constants/translations";
 
 interface CustomWindow extends Window {
     currentLanguage: "latin" | "english";
+    currentlyPlayingWord: string;
 }
 
 declare let window: CustomWindow;
@@ -12,7 +13,9 @@ export function translatePage(language: "latin" | "english") {
     let translatable = document.querySelectorAll(`[data-trans]`);
     for (let i = 0; i < translatable.length; i++) {
         let transId = translatable[i].getAttribute("data-trans");
-        translatable[i].innerHTML = translations[transId][language];
+        let text = translations[transId][language];
+        if (transId == "answer-was") text += window.currentlyPlayingWord.toUpperCase();
+        translatable[i].innerHTML = text;
     }
 }
 

@@ -77,14 +77,24 @@ function setKeyboardKeyState(key: string, state: "correct" | "present" | "absent
     }
 }
 
-function toastWithMessage(messageId: string) {
+function toastWithMessage(messageId: string, fades: boolean = true) {
     let toastBag = document.getElementById("toast-bag");
     let toast = document.createElement("div");
     toast.innerText = getCurrentTextForId(messageId);
     toast.classList.add("toast");
+    toast.classList.add("toast-fade");
     toast.setAttribute("data-trans", messageId);
     toastBag.prepend(toast);
-    setTimeout(() => toastBag.removeChild(toastBag.lastElementChild), 2000)
+    if (fades) setTimeout(() => toastBag.removeChild(toastBag.lastElementChild), 2000)
+}
+
+function showAnswer() {
+    let toastBag = document.getElementById("toast-bag");
+    let toast = document.createElement("div");
+    toast.innerText = getCurrentTextForId("answer-was") + window.currentlyPlayingWord.toUpperCase();
+    toast.classList.add("toast");
+    toast.setAttribute("data-trans", "answer-was");
+    toastBag.prepend(toast);
 }
 
 function shakeWord(wordNumber: number) {
@@ -127,12 +137,16 @@ function guessWordInRow(word: string, answer: string, row: number, isInitialLoad
         appendGuess(window.currentlyPlayingId, word);
         if (word == answer || row == 5) {
             updateStatsFromSolve();
-            if(!isInitialLoad) {
+            if(!isInitialLoad && row != 5) {
                 setTimeout(() => toastWithMessage(`congrats-${window.pastGuesses.length}`), flipGap * 5 + 550);
                 setTimeout(() => bounceWord(window.pastGuesses.length - 1), flipGap * 5 + 550);
             }
         }
     }
+    if (row == 5 && word != answer) {
+        showAnswer();
+    }
+
     window.currentWordNumber++;
     window.currentLetterNumber = 0;
     window.currentlyGuessingWord = "";

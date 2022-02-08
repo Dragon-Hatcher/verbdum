@@ -137,7 +137,7 @@ function guessWordInRow(word: string, answer: string, row: number, isInitialLoad
         appendGuess(window.currentlyPlayingId, word);
         if (word == answer || row == 5) {
             updateStatsFromSolve();
-            if(!isInitialLoad && row != 5) {
+            if(!isInitialLoad && (row != 5 || word == answer)) {
                 setTimeout(() => toastWithMessage(`congrats-${window.pastGuesses.length}`), flipGap * 5 + 550);
                 setTimeout(() => bounceWord(window.pastGuesses.length - 1), flipGap * 5 + 550);
             }
@@ -290,5 +290,4 @@ export function loadGameForDate(date: Date) {
     clearGameBoard();
     clearKeyboard();
     loadGuesses(window.currentlyPlayingId);
-    console.log(`now playing ${window.currentlyPlayingWord} (${window.currentlyPlayingId})`);
 }

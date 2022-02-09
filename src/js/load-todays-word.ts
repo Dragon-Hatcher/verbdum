@@ -1,5 +1,5 @@
 import {loadGameForDate, updateStatsPage} from "./game";
-import {loadPreferredLanguage, translatePage} from "./translate";
+import {getCurrentNumber, loadPreferredLanguage, translatePage} from "./translate";
 import {showHelpModal} from "./modal";
 
 function startTimer(duration, display) {
@@ -20,11 +20,9 @@ function startTimer(duration, display) {
             hours = (diff / 3600) | 0;
             minutes = (diff / 60 % 60) | 0;
             seconds = (diff % 60) | 0;
-
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-
-            display.textContent = hours + ":" + minutes + ":" + seconds;
+            display.children[0].textContent = getCurrentNumber(hours);
+            display.children[1].textContent = getCurrentNumber(minutes);
+            display.children[2].textContent = getCurrentNumber(seconds);
         } else {
             display.textContent = "Now!";
             clearInterval(intervalId);

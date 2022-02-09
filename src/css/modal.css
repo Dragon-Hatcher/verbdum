@@ -139,9 +139,11 @@
 }
 
 .graph-id {
-    width: 8px;
+    width: 16px;
     margin: 0 4px;
     line-height: 22px;
+
+    font-weight: bold;
 }
 
 .graph {

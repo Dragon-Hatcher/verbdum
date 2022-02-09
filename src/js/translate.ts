@@ -1,4 +1,5 @@
 import {translations} from "./constants/translations";
+import {deromanize, romanize} from "./roman-numerals";
 
 interface CustomWindow extends Window {
     currentLanguage: "latin" | "english";
@@ -13,14 +14,30 @@ export function translatePage(language: "latin" | "english") {
     let translatable = document.querySelectorAll(`[data-trans]`);
     for (let i = 0; i < translatable.length; i++) {
         let transId = translatable[i].getAttribute("data-trans");
-        let text = translations[transId][language];
-        if (transId == "answer-was") text += window.currentlyPlayingWord.toUpperCase();
-        translatable[i].innerHTML = text;
+        if (transId == "number") {
+            if (/\d+/.test(translatable[i].textContent)) {
+                if (language == "latin") translatable[i].textContent = romanize(+translatable[i].textContent)
+            } else {
+                if (language == "english") translatable[i].textContent = deromanize(translatable[i].textContent).toString()
+            }
+        } else {
+            let text = translations[transId][language];
+            if (transId == "answer-was") text += window.currentlyPlayingWord.toUpperCase();
+            translatable[i].innerHTML = text;
+        }
     }
 }
 
 export function getCurrentTextForId(id: string): string {
     return translations[id][window.currentLanguage]
+}
+
+export function getCurrentNumber(number: number): string {
+    if (window.currentLanguage == "latin") {
+        return romanize(number);
+    } else {
+        return number.toString();
+    }
 }
 
 export function loadPreferredLanguage() {

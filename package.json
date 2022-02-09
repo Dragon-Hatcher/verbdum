@@ -21,6 +21,7 @@
     ]
   },
   "dependencies": {
-    "gh-pages": "^3.2.3"
+    "gh-pages": "^3.2.3",
+    "roman-numerals": "^0.3.2"
   }
 }

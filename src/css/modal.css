@@ -51,8 +51,11 @@
 
 .modal-title {
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size: 1rem;
     display: inline;
+
+    width: 100%;
+    text-align: center;
 }
 
 .modal-close-button {
@@ -161,10 +164,51 @@
     padding: 0.2rem 0.4rem;
 }
 
+#countdown-share {
+    display: grid;
+    grid-template-columns: 2fr 21px 1fr;
+}
+
+#timer-bag {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: auto;
+}
+
 #countdown-timer {
-    font-size: 2.25rem;
+    font-size: 2rem;
     margin: 1rem 0;
 
     width: 100%;
     text-align: center;
+}
+
+.vr {
+    width: 1px;
+    margin: 0 10px;
+    background: black;
+}
+
+#share-button {
+    background: var(--background-correct);
+
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: auto;
+
+    cursor: pointer;
+
+    height: 52px;
+    padding: 0 1rem;
+
+    border: none;
+    border-radius: 5px;
 }

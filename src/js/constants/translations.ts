@@ -115,5 +115,17 @@ export const translations: TranslationSet = {
     "answer-was": {
         "english": "The word was: ",
         "latin": "Verbum erat: "
+    },
+    "share": {
+        "english": "SHARE",
+        "latin": "COMMŪNICĀ"
+    },
+    "copy-success": {
+        "english": "Copied to clipboard.",
+        "latin": "Copied to clipboard."
+    },
+    "copy-fail": {
+        "english": "Couldn't copy to clipboard.",
+        "latin": "Couldn't copy to clipboard."
     }
 };

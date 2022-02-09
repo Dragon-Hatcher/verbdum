@@ -15,7 +15,9 @@ interface CustomWindow extends Window {
 declare let window: CustomWindow;
 
 function clearLetter(element: Element, text: boolean = true) {
-    if (text) { element.textContent = ""; }
+    if (text) {
+        element.textContent = "";
+    }
     element.classList.remove("guessing");
     element.classList.remove("absent");
     element.classList.remove("present");
@@ -79,7 +81,7 @@ function setKeyboardKeyState(key: string, state: "correct" | "present" | "absent
 }
 
 function toastWithMessage(messageId: string, fades: boolean = true) {
-    let toastBag = document.getElementById("toast-bag");
+    let toastBag = document.getElementById("main-toast-bag");
     let toast = document.createElement("div");
     toast.innerText = getCurrentTextForId(messageId);
     toast.classList.add("toast");
@@ -90,7 +92,7 @@ function toastWithMessage(messageId: string, fades: boolean = true) {
 }
 
 function showAnswer() {
-    let toastBag = document.getElementById("toast-bag");
+    let toastBag = document.getElementById("main-toast-bag");
     let toast = document.createElement("div");
     toast.innerText = getCurrentTextForId("answer-was") + window.currentlyPlayingWord.toUpperCase();
     toast.classList.add("toast");
@@ -126,6 +128,28 @@ function setClueForLetter(wordNumber: number, letterNumber: number, letterValue:
     }, flipGap);
 }
 
+export function getColors(word: string, answer: string): ("correct" | "absent" | "present")[] {
+    let colors: ("correct" | "absent" | "present")[] = ["absent", "absent", "absent", "absent", "absent"];
+    let answerLetters = answer;
+    for (let i = 0; i < 5; i++) {
+        if (word[i] == answer[i]) {
+            colors[i] = "correct";
+            answerLetters = answerLetters.replace(word[i], "");
+        } else if (!answer.includes(word[i])) {
+            colors[i] = "absent";
+        }
+    }
+    for (let i = 0; i < 5; i++) {
+        if (word[i] != answer[i] && answerLetters.includes(word[i])) {
+            colors[i] = "present";
+            answerLetters = answerLetters.replace(word[i], "");
+        } else if (word[i] != answer[i]) {
+            colors[i] = "absent";
+        }
+    }
+    return colors;
+}
+
 function guessWordInRow(word: string, answer: string, row: number, isInitialLoad: boolean = false) {
     if (!allowedGuesses.includes(word)) {
         toastWithMessage("toast-invalid-word");
@@ -159,24 +183,11 @@ function guessWordInRow(word: string, answer: string, row: number, isInitialLoad
     window.currentLetterNumber = 0;
     window.currentlyGuessingWord = "";
 
-    let answerLetters = answer;
+    let colors = getColors(word, answer);
     for (let i = 0; i < 5; i++) {
         let letterElement = getLetterElement(row, i);
         clearLetter(letterElement, false);
-        if (word[i] == answer[i]) {
-            setTimeout(() => setClueForLetter(row, i, word[i], "correct"), i * letterFlipDelay);
-            answerLetters = answerLetters.replace(word[i], "");
-        } else if (!answer.includes(word[i])) {
-            setTimeout(() => setClueForLetter(row, i, word[i], "absent"), i * letterFlipDelay);
-        }
-    }
-    for (let i = 0; i < 5; i++) {
-        if (word[i] != answer[i] && answerLetters.includes(word[i])) {
-            setTimeout(() => setClueForLetter(row, i, word[i], "present"), i * letterFlipDelay);
-            answerLetters = answerLetters.replace(word[i], "");
-        } else if (word[i] != answer[i]) {
-            setTimeout(() => setClueForLetter(row, i, word[i], "absent"), i * letterFlipDelay);
-        }
+        setTimeout(() => setClueForLetter(row, i, word[i], colors[i]), i * letterFlipDelay);
     }
 }
 
@@ -201,7 +212,7 @@ function loadGuesses(id: number) {
     }
 }
 
-function isPlaying(): boolean {
+export function isPlaying(): boolean {
     return window.currentWordNumber != 6 && !window.pastGuesses.includes(window.currentlyPlayingWord);
 }
 
@@ -224,7 +235,7 @@ export function readStats(): Stats {
     }
 }
 
-export function updateStatsPage(attempts: number) {
+export function updateStatsPage() {
     let currentStats = readStats();
 
     document.getElementById("stat-played").innerText = currentStats.roundsPlayed.toString();
@@ -236,11 +247,11 @@ export function updateStatsPage(attempts: number) {
     let maxSolveNum = Math.max.apply(null, solveNumbers);
 
     for (let i = 0; i < 6; i++) {
-        let graph = document.querySelectorAll(`[data-graph-num='${i+1}']`)[0] as HTMLElement;
+        let graph = document.querySelectorAll(`[data-graph-num='${i + 1}']`)[0] as HTMLElement;
         graph.style.width = ((solveNumbers[i] / maxSolveNum) * 100).toString() + "%";
         graph.children[0].textContent = solveNumbers[i].toString();
         graph.classList.remove("most-recent");
-        if (i + 1 == window.pastGuesses.length) graph.classList.add("most-recent");
+        if (window.pastGuesses[i] == window.currentlyPlayingWord) graph.classList.add("most-recent");
     }
 }
 

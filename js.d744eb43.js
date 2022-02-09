@@ -266,7 +266,7 @@ exports.translations = {
   },
   "htp-3": {
     "english": "After each guess, the color of the tiles will change to show how close your guess was to the word.",
-    "latin": "Post quodque conatum, littera tingentur ut demonstrent partes rectas conati."
+    "latin": "Post quodque conatum, litterae tingentur ut demonstrent partes rectas conati."
   },
   "htp-ex": {
     "english": "Examples",
@@ -282,11 +282,11 @@ exports.translations = {
   },
   "htp-ex-3": {
     "english": "The letter E is not in the word.",
-    "latin": "Littera E est non in verbō."
+    "latin": "Littera E non est in verbō."
   },
   "htp-4": {
-    "english": "There is a new <b>VERBDUM</b> each day or you can play past <b>VERBDUMs</b> in the archive.",
-    "latin": "Est novum <b>VERBDUM</b> cotidiē vel <b>VERBDA</b> priora ludi possunt in archivis."
+    "english": "There is a new <b>VERBDUM</b> each day.",
+    "latin": "Est novum <b>VERBDUM</b> cotidiē."
   },
   "stat-title": {
     "english": "STATISTICS",
@@ -327,6 +327,34 @@ exports.translations = {
   "toast-too-few-letters": {
     "english": "Not enough letters.",
     "latin": "Non satis litterarum."
+  },
+  "congrats-1": {
+    "english": "Genius!",
+    "latin": "Optime!"
+  },
+  "congrats-2": {
+    "english": "Magnificent!",
+    "latin": "Pulcherrime!"
+  },
+  "congrats-3": {
+    "english": "Impressive!",
+    "latin": "Macte!"
+  },
+  "congrats-4": {
+    "english": "Splendid!",
+    "latin": "Sophos!"
+  },
+  "congrats-5": {
+    "english": "Great!",
+    "latin": "Bene!"
+  },
+  "congrats-6": {
+    "english": "Phew!",
+    "latin": "Euge!"
+  },
+  "answer-was": {
+    "english": "The word was: ",
+    "latin": "Verbum erat: "
   }
 };
 },{}],"../js/translate.ts":[function(require,module,exports) {
@@ -346,7 +374,9 @@ function translatePage(language) {
 
   for (var i = 0; i < translatable.length; i++) {
     var transId = translatable[i].getAttribute("data-trans");
-    translatable[i].innerHTML = translations_1.translations[transId][language];
+    var text = translations_1.translations[transId][language];
+    if (transId == "answer-was") text += window.currentlyPlayingWord.toUpperCase();
+    translatable[i].innerHTML = text;
   }
 }
 
@@ -370,7 +400,60 @@ function toggleTranslation() {
 }
 
 exports.toggleTranslation = toggleTranslation;
-},{"./constants/translations":"../js/constants/translations.ts"}],"../js/game.ts":[function(require,module,exports) {
+},{"./constants/translations":"../js/constants/translations.ts"}],"../js/modal.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.showStatsModal = exports.showHelpModal = void 0;
+
+var translate_1 = require("./translate");
+
+var modalBagElement = document.getElementById("modal-bag");
+modalBagElement.addEventListener("click", function () {
+  modalBagElement.classList.add("hidden");
+  setTimeout(function () {
+    return modalBagElement.classList.remove("shown");
+  }, 200);
+});
+var helpElement = document.getElementById("header-help");
+helpElement.addEventListener("click", showHelpModal);
+var statsElement = document.getElementById("header-stats");
+statsElement.addEventListener("click", showStatsModal);
+var langSwitches = document.getElementsByClassName("lang-switch");
+
+for (var i = 0; i < langSwitches.length; i++) {
+  langSwitches[i].addEventListener("click", translate_1.toggleTranslation);
+}
+
+var helpModal = document.getElementById("help-modal");
+var statsModal = document.getElementById("stats-modal");
+
+function hideAllModals() {
+  helpModal.classList.remove("shown");
+  statsModal.classList.remove("shown");
+}
+
+function showModal(modal) {
+  modalBagElement.classList.remove("hidden");
+  modalBagElement.classList.add("shown");
+  hideAllModals();
+  modal.classList.add("shown");
+}
+
+function showHelpModal() {
+  showModal(helpModal);
+}
+
+exports.showHelpModal = showHelpModal;
+
+function showStatsModal() {
+  showModal(statsModal);
+}
+
+exports.showStatsModal = showStatsModal;
+},{"./translate":"../js/translate.ts"}],"../js/game.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -383,6 +466,8 @@ var word_for_day_1 = require("./word-for-day");
 var allowed_guesses_1 = require("./constants/allowed-guesses");
 
 var translate_1 = require("./translate");
+
+var modal_1 = require("./modal");
 
 function clearLetter(element) {
   var text = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
@@ -453,15 +538,26 @@ function setKeyboardKeyState(key, state) {
 }
 
 function toastWithMessage(messageId) {
+  var fades = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var toastBag = document.getElementById("toast-bag");
   var toast = document.createElement("div");
   toast.innerText = (0, translate_1.getCurrentTextForId)(messageId);
   toast.classList.add("toast");
+  toast.classList.add("toast-fade");
   toast.setAttribute("data-trans", messageId);
   toastBag.prepend(toast);
-  setTimeout(function () {
+  if (fades) setTimeout(function () {
     return toastBag.removeChild(toastBag.lastElementChild);
   }, 2000);
+}
+
+function showAnswer() {
+  var toastBag = document.getElementById("toast-bag");
+  var toast = document.createElement("div");
+  toast.innerText = (0, translate_1.getCurrentTextForId)("answer-was") + window.currentlyPlayingWord.toUpperCase();
+  toast.classList.add("toast");
+  toast.setAttribute("data-trans", "answer-was");
+  toastBag.prepend(toast);
 }
 
 function shakeWord(wordNumber) {
@@ -478,6 +574,22 @@ function shakeWord(wordNumber) {
   }
 }
 
+var flipGap = 250;
+var bounceGap = 100;
+
+function bounceWord(wordNumber) {
+  var _loop2 = function _loop2(i) {
+    var letterElement = getLetterElement(wordNumber, i);
+    setTimeout(function () {
+      return letterElement.setAttribute("data-animation", "bounce");
+    }, bounceGap * i);
+  };
+
+  for (var i = 0; i < 5; i++) {
+    _loop2(i);
+  }
+}
+
 function setClueForLetter(wordNumber, letterNumber, letterValue, clue) {
   var letterElement = getLetterElement(wordNumber, letterNumber);
   letterElement.setAttribute("data-animation", "flip");
@@ -485,7 +597,7 @@ function setClueForLetter(wordNumber, letterNumber, letterValue, clue) {
     letterElement.textContent = letterValue.toUpperCase();
     letterElement.classList.add(clue);
     setKeyboardKeyState(letterValue, clue);
-  }, 250);
+  }, flipGap);
 }
 
 function guessWordInRow(word, answer, row) {
@@ -501,7 +613,21 @@ function guessWordInRow(word, answer, row) {
 
   if (!isInitialLoad) {
     appendGuess(window.currentlyPlayingId, word);
-    if (word == answer || row == 5) updateStatsFromSolve();
+
+    if (word == answer || row == 5) {
+      updateStatsFromSolve();
+      setTimeout(function () {
+        return toastWithMessage("congrats-".concat(window.pastGuesses.length));
+      }, flipGap * 5 + 550);
+      setTimeout(function () {
+        return bounceWord(window.pastGuesses.length - 1);
+      }, flipGap * 5 + 550);
+      setTimeout(modal_1.showStatsModal, flipGap * 5 + 550 + 2000);
+    }
+  }
+
+  if (row == 5 && word != answer) {
+    showAnswer();
   }
 
   window.currentWordNumber++;
@@ -510,7 +636,7 @@ function guessWordInRow(word, answer, row) {
   var answerLetters = answer;
   var letterFlipDelay = isInitialLoad ? 100 : 300;
 
-  var _loop2 = function _loop2(i) {
+  var _loop3 = function _loop3(i) {
     var letterElement = getLetterElement(row, i);
     clearLetter(letterElement, false);
 
@@ -527,10 +653,10 @@ function guessWordInRow(word, answer, row) {
   };
 
   for (var i = 0; i < 5; i++) {
-    _loop2(i);
+    _loop3(i);
   }
 
-  var _loop3 = function _loop3(_i) {
+  var _loop4 = function _loop4(_i) {
     if (word[_i] != answer[_i] && answerLetters.includes(word[_i])) {
       setTimeout(function () {
         return setClueForLetter(row, _i, word[_i], "present");
@@ -544,7 +670,7 @@ function guessWordInRow(word, answer, row) {
   };
 
   for (var _i = 0; _i < 5; _i++) {
-    _loop3(_i);
+    _loop4(_i);
   }
 }
 
@@ -589,7 +715,7 @@ function readStats() {
 
 exports.readStats = readStats;
 
-function updateStatsPage() {
+function updateStatsPage(attempts) {
   var currentStats = readStats();
   document.getElementById("stat-played").innerText = currentStats.roundsPlayed.toString();
   document.getElementById("stat-win-percent").innerText = Math.round(currentStats.roundsWon / currentStats.roundsPlayed * 100 || 0).toString();
@@ -602,6 +728,8 @@ function updateStatsPage() {
     var graph = document.querySelectorAll("[data-graph-num='".concat(i + 1, "']"))[0];
     graph.style.width = (solveNumbers[i] / maxSolveNum * 100).toString() + "%";
     graph.children[0].textContent = solveNumbers[i].toString();
+    graph.classList.remove("most-recent");
+    if (i + 1 == attempts) graph.classList.add("most-recent");
   }
 }
 
@@ -622,7 +750,7 @@ function updateStatsFromSolve() {
     }
 
     localStorage.setItem("stats", JSON.stringify(currentStats));
-    updateStatsPage();
+    updateStatsPage(window.pastGuesses.length);
   }
 }
 
@@ -669,11 +797,10 @@ function loadGameForDate(date) {
   clearGameBoard();
   clearKeyboard();
   loadGuesses(window.currentlyPlayingId);
-  console.log("now playing ".concat(window.currentlyPlayingWord, " (").concat(window.currentlyPlayingId, ")"));
 }
 
 exports.loadGameForDate = loadGameForDate;
-},{"./word-for-day":"../js/word-for-day.ts","./constants/allowed-guesses":"../js/constants/allowed-guesses.ts","./translate":"../js/translate.ts"}],"../js/keyboard.ts":[function(require,module,exports) {
+},{"./word-for-day":"../js/word-for-day.ts","./constants/allowed-guesses":"../js/constants/allowed-guesses.ts","./translate":"../js/translate.ts","./modal":"../js/modal.ts"}],"../js/keyboard.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -743,6 +870,8 @@ var game_1 = require("./game");
 
 var translate_1 = require("./translate");
 
+var modal_1 = require("./modal");
+
 function startTimer(duration, display) {
   var start = Date.now(),
       diff,
@@ -783,64 +912,19 @@ function getSecondsTillTomorrow() {
   return Math.round(diff / 1000); // convert to seconds
 }
 
+function checkShouldShowHelp() {
+  if (localStorage.getItem("first-visit") == null) {
+    localStorage.setItem("first-visit", "true");
+    (0, modal_1.showHelpModal)();
+  }
+}
+
 (0, game_1.loadGameForDate)(new Date());
 (0, game_1.updateStatsPage)();
 startTimer(getSecondsTillTomorrow(), document.getElementById("countdown-timer"));
 (0, translate_1.loadPreferredLanguage)();
-},{"./game":"../js/game.ts","./translate":"../js/translate.ts"}],"../js/modal.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.showStatsModal = exports.showHelpModal = void 0;
-
-var translate_1 = require("./translate");
-
-var modalBagElement = document.getElementById("modal-bag");
-modalBagElement.addEventListener("click", function () {
-  modalBagElement.classList.add("hidden");
-  setTimeout(function () {
-    return modalBagElement.classList.remove("shown");
-  }, 200);
-});
-var helpElement = document.getElementById("header-help");
-helpElement.addEventListener("click", showHelpModal);
-var statsElement = document.getElementById("header-stats");
-statsElement.addEventListener("click", showStatsModal);
-var langSwitches = document.getElementsByClassName("lang-switch");
-
-for (var i = 0; i < langSwitches.length; i++) {
-  langSwitches[i].addEventListener("click", translate_1.toggleTranslation);
-}
-
-var helpModal = document.getElementById("help-modal");
-var statsModal = document.getElementById("stats-modal");
-
-function hideAllModals() {
-  helpModal.classList.remove("shown");
-  statsModal.classList.remove("shown");
-}
-
-function showModal(modal) {
-  modalBagElement.classList.remove("hidden");
-  modalBagElement.classList.add("shown");
-  hideAllModals();
-  modal.classList.add("shown");
-}
-
-function showHelpModal() {
-  showModal(helpModal);
-}
-
-exports.showHelpModal = showHelpModal;
-
-function showStatsModal() {
-  showModal(statsModal);
-}
-
-exports.showStatsModal = showStatsModal;
-},{"./translate":"../js/translate.ts"}],"../js/index.ts":[function(require,module,exports) {
+checkShouldShowHelp();
+},{"./game":"../js/game.ts","./translate":"../js/translate.ts","./modal":"../js/modal.ts"}],"../js/index.ts":[function(require,module,exports) {
 require('./keyboard.ts');
 
 require('./load-todays-word.ts');
@@ -874,7 +958,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55381" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57102" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

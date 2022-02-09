@@ -233,7 +233,7 @@ export function updateStatsPage(attempts: number) {
         graph.style.width = ((solveNumbers[i] / maxSolveNum) * 100).toString() + "%";
         graph.children[0].textContent = solveNumbers[i].toString();
         graph.classList.remove("most-recent");
-        if (i + 1 == attempts) graph.classList.add("most-recent");
+        if (i + 1 == window.pastGuesses.length) graph.classList.add("most-recent");
     }
 }
 
@@ -251,7 +251,6 @@ function updateStatsFromSolve() {
         }
 
         localStorage.setItem("stats", JSON.stringify(currentStats));
-        updateStatsPage(window.pastGuesses.length);
     }
 }
 

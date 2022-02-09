@@ -73,8 +73,8 @@ function getText(): string | null {
         let colors = window.pastGuesses.map( (x) => getColors(x, window.currentlyPlayingWord));
         let emojiMap = {
             "correct": "🟩",
-            "present": "⬜",
-            "absent": "🟨",
+            "present": "🟨",
+            "absent": "⬜",
         };
 
         let emojis = colors.map(((row) => row.map((x) => emojiMap[x]).join(""))).join("\n");

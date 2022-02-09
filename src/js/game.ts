@@ -269,6 +269,7 @@ function updateStatsFromSolve() {
         }
 
         localStorage.setItem("stats", JSON.stringify(currentStats));
+        updateStatsPage();
     }
 }
 

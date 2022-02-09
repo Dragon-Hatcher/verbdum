@@ -217,7 +217,7 @@ export function readStats(): Stats {
     }
 }
 
-export function updateStatsPage() {
+export function updateStatsPage(attempts: number) {
     let currentStats = readStats();
 
     document.getElementById("stat-played").innerText = currentStats.roundsPlayed.toString();
@@ -232,6 +232,8 @@ export function updateStatsPage() {
         let graph = document.querySelectorAll(`[data-graph-num='${i+1}']`)[0] as HTMLElement;
         graph.style.width = ((solveNumbers[i] / maxSolveNum) * 100).toString() + "%";
         graph.children[0].textContent = solveNumbers[i].toString();
+        graph.classList.remove("most-recent");
+        if (i + 1 == attempts) graph.classList.add("most-recent");
     }
 }
 
@@ -249,7 +251,7 @@ function updateStatsFromSolve() {
         }
 
         localStorage.setItem("stats", JSON.stringify(currentStats));
-        updateStatsPage();
+        updateStatsPage(window.pastGuesses.length);
     }
 }
 

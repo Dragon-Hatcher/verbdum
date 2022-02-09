@@ -715,7 +715,7 @@ function readStats() {
 
 exports.readStats = readStats;
 
-function updateStatsPage() {
+function updateStatsPage(attempts) {
   var currentStats = readStats();
   document.getElementById("stat-played").innerText = currentStats.roundsPlayed.toString();
   document.getElementById("stat-win-percent").innerText = Math.round(currentStats.roundsWon / currentStats.roundsPlayed * 100 || 0).toString();
@@ -728,6 +728,8 @@ function updateStatsPage() {
     var graph = document.querySelectorAll("[data-graph-num='".concat(i + 1, "']"))[0];
     graph.style.width = (solveNumbers[i] / maxSolveNum * 100).toString() + "%";
     graph.children[0].textContent = solveNumbers[i].toString();
+    graph.classList.remove("most-recent");
+    if (i + 1 == attempts) graph.classList.add("most-recent");
   }
 }
 
@@ -748,7 +750,7 @@ function updateStatsFromSolve() {
     }
 
     localStorage.setItem("stats", JSON.stringify(currentStats));
-    updateStatsPage();
+    updateStatsPage(window.pastGuesses.length);
   }
 }
 

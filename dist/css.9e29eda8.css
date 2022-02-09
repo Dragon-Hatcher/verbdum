@@ -445,6 +445,10 @@ html, body {
     min-width: 1.3rem;
 }
 
+.graph.most-recent {
+    background: var(--background-correct);
+}
+
 .graph-percent {
     color: white;
     font-weight: bold;

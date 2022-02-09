@@ -4,14 +4,22 @@
   "scripts": {
     "build": "parcel build src/html/index.html",
     "dev": "parcel src/html/index.html --open",
-    "start": "npm run build && npm run dev"
+    "start": "npm run build && npm run dev",
+    "deploy": "npm run build && gh-pages -d dist"
   },
+  "homepage": "https://Dragon-Hatcher.github.io/verbdum",
   "devDependencies": {
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-static-files-copy": "^2.6.0",
     "typescript": "^4.5.5"
   },
   "staticFiles": {
-    "staticPath": ["robots.txt", "site.webmanifest"]
+    "staticPath": [
+      "robots.txt",
+      "site.webmanifest"
+    ]
+  },
+  "dependencies": {
+    "gh-pages": "^3.2.3"
   }
 }

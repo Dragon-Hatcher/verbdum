@@ -1,8 +1,9 @@
 :root {
     --grid-gap: 5px;
-    --board-width: 330px;
-    --board-height: 400px;
+    --board-height: min(400px, 40vh);
+    --board-width: calc(var(--board-height) * 0.83333);
 }
+
 
 #game-board {
     display: grid;
@@ -30,7 +31,7 @@
     align-items: center;
 
     /* font style */
-    font-size: 2rem;
+    font-size: calc(var(--board-height) * 0.08);
     font-weight: bold;
 }
 
@@ -47,6 +48,12 @@
 .letter[data-animation='flip'] {
     animation-name: Flip;
     animation-duration: 500ms;
+    animation-timing-function: ease-in-out;
+}
+
+.letter[data-animation='bounce'] {
+    animation-name: Bounce;
+    animation-duration: 1000ms;
     animation-timing-function: ease-in-out;
 }
 
@@ -94,6 +101,26 @@
     }
 }
 
+@keyframes Bounce {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+    80% {
+        transform: translateY(2px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
 
 .guessing {
     border: 2px solid var(--border-color-guessing);

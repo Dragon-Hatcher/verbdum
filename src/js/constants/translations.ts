@@ -26,7 +26,7 @@ export const translations: TranslationSet = {
     },
     "htp-3": {
         "english": "After each guess, the color of the tiles will change to show how close your guess was to the word.",
-        "latin": "Post quodque conatum, littera tingentur ut demonstrent partes rectas conati.",
+        "latin": "Post quodque conatum, litterae tingentur ut demonstrent partes rectas conati.",
     },
     "htp-ex": {
         "english": "Examples",
@@ -42,7 +42,7 @@ export const translations: TranslationSet = {
     },
     "htp-ex-3": {
         "english": "The letter E is not in the word.",
-        "latin": "Littera E est non in verbō.",
+        "latin": "Littera E non est in verbō.",
     },
     "htp-4": {
         "english": "There is a new <b>VERBDUM</b> each day or you can play past <b>VERBDUMs</b> in the archive.",
@@ -87,5 +87,33 @@ export const translations: TranslationSet = {
     "toast-too-few-letters": {
         "english": "Not enough letters.",
         "latin": "Non satis litterarum.",
+    },
+    "congrats-1": {
+        "english": "Genius!",
+        "latin": "Optime!",
+    },
+    "congrats-2": {
+        "english": "Magnificent!",
+        "latin": "Pulcherrime!",
+    },
+    "congrats-3": {
+        "english": "Impressive!",
+        "latin": "Macte!",
+    },
+    "congrats-4": {
+        "english": "Splendid!",
+        "latin": "Sophos!",
+    },
+    "congrats-5": {
+        "english": "Great!",
+        "latin": "Bene!",
+    },
+    "congrats-6": {
+        "english": "Phew!",
+        "latin": "Euge!",
+    },
+    "answer-was": {
+        "english": "The word was: ",
+        "latin": "Verbum erat: "
     }
 };

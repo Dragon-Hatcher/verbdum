@@ -1,5 +1,5 @@
 import {loadGameForDate, updateStatsPage} from "./game";
-import {getCurrentNumber, loadPreferredLanguage, translatePage} from "./translate";
+import {getCurrentNumber, getCurrentTextForId, loadPreferredLanguage, translatePage} from "./translate";
 import {showHelpModal} from "./modal";
 
 function startTimer(duration, display) {
@@ -24,7 +24,7 @@ function startTimer(duration, display) {
             display.children[1].textContent = getCurrentNumber(minutes);
             display.children[2].textContent = getCurrentNumber(seconds);
         } else {
-            display.textContent = "Now!";
+            display.innerHTML = `<span data-trans="now">${getCurrentTextForId("now")}</span>`;
             clearInterval(intervalId);
         }
 

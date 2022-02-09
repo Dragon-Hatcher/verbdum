@@ -127,5 +127,9 @@ export const translations: TranslationSet = {
     "copy-fail": {
         "english": "Couldn't copy to clipboard.",
         "latin": "Couldn't copy to clipboard."
+    },
+    "now": {
+        "english": "Now!",
+        "latin": "Nunc!"
     }
 };

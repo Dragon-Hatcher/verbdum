@@ -1,6 +1,7 @@
 import {verbdumForDay, verbdumForToday, verbdumIdForDay, verbdumIdForToday} from "./word-for-day";
 import {allowedGuesses} from "./constants/allowed-guesses";
 import {getCurrentTextForId} from "./translate";
+import {showStatsModal} from "./modal";
 
 interface CustomWindow extends Window {
     currentWordNumber: number;
@@ -137,10 +138,9 @@ function guessWordInRow(word: string, answer: string, row: number, isInitialLoad
         appendGuess(window.currentlyPlayingId, word);
         if (word == answer || row == 5) {
             updateStatsFromSolve();
-            if(!isInitialLoad && (row != 5 || word == answer)) {
-                setTimeout(() => toastWithMessage(`congrats-${window.pastGuesses.length}`), flipGap * 5 + 550);
-                setTimeout(() => bounceWord(window.pastGuesses.length - 1), flipGap * 5 + 550);
-            }
+            setTimeout(() => toastWithMessage(`congrats-${window.pastGuesses.length}`), flipGap * 5 + 550);
+            setTimeout(() => bounceWord(window.pastGuesses.length - 1), flipGap * 5 + 550);
+            setTimeout(showStatsModal, flipGap * 5 + 550 + 2000);
         }
     }
     if (row == 5 && word != answer) {

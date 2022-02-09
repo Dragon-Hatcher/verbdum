@@ -1,6 +1,6 @@
 import {verbdumForDay, verbdumForToday, verbdumIdForDay, verbdumIdForToday} from "./word-for-day";
 import {allowedGuesses} from "./constants/allowed-guesses";
-import {getCurrentTextForId} from "./translate";
+import {getCurrentNumber, getCurrentTextForId} from "./translate";
 import {showStatsModal} from "./modal";
 
 interface CustomWindow extends Window {
@@ -238,10 +238,10 @@ export function readStats(): Stats {
 export function updateStatsPage() {
     let currentStats = readStats();
 
-    document.getElementById("stat-played").innerText = currentStats.roundsPlayed.toString();
-    document.getElementById("stat-win-percent").innerText = Math.round((currentStats.roundsWon / currentStats.roundsPlayed) * 100 || 0).toString();
-    document.getElementById("stat-current-streak").innerText = currentStats.currentStreak.toString();
-    document.getElementById("stat-max-streak").innerText = currentStats.maxStreak.toString();
+    document.getElementById("stat-played").innerText = getCurrentNumber(currentStats.roundsPlayed);
+    document.getElementById("stat-win-percent").innerText = getCurrentNumber(Math.round((currentStats.roundsWon / currentStats.roundsPlayed) * 100 || 0));
+    document.getElementById("stat-current-streak").innerText = getCurrentNumber(currentStats.currentStreak);
+    document.getElementById("stat-max-streak").innerText = getCurrentNumber(currentStats.maxStreak);
 
     let solveNumbers = currentStats.solveNumbers;
     let maxSolveNum = Math.max.apply(null, solveNumbers);
@@ -249,7 +249,7 @@ export function updateStatsPage() {
     for (let i = 0; i < 6; i++) {
         let graph = document.querySelectorAll(`[data-graph-num='${i + 1}']`)[0] as HTMLElement;
         graph.style.width = ((solveNumbers[i] / maxSolveNum) * 100).toString() + "%";
-        graph.children[0].textContent = solveNumbers[i].toString();
+        graph.children[0].textContent = getCurrentNumber(solveNumbers[i]);
         graph.classList.remove("most-recent");
         if (window.pastGuesses[i] == window.currentlyPlayingWord) graph.classList.add("most-recent");
     }

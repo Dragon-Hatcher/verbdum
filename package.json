@@ -16,7 +16,8 @@
   "staticFiles": {
     "staticPath": [
       "robots.txt",
-      "site.webmanifest"
+      "site.webmanifest",
+      ".nojekyll"
     ]
   },
   "dependencies": {

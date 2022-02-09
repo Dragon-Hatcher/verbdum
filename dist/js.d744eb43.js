@@ -285,8 +285,8 @@ exports.translations = {
     "latin": "Littera E non est in verbō."
   },
   "htp-4": {
-    "english": "There is a new <b>VERBDUM</b> each day or you can play past <b>VERBDUMs</b> in the archive.",
-    "latin": "Est novum <b>VERBDUM</b> cotidiē vel <b>VERBDA</b> priora ludi possunt in archivis."
+    "english": "There is a new <b>VERBDUM</b> each day.",
+    "latin": "Est novum <b>VERBDUM</b> cotidiē."
   },
   "stat-title": {
     "english": "STATISTICS",

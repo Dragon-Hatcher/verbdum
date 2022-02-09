@@ -134,17 +134,25 @@ function guessWordInRow(word: string, answer: string, row: number, isInitialLoad
     }
 
     window.pastGuesses.push(word);
+    const letterFlipDelay = isInitialLoad ? 100 : 300;
     if (!isInitialLoad) {
         appendGuess(window.currentlyPlayingId, word);
         if (word == answer || row == 5) {
             updateStatsFromSolve();
+            setTimeout(showStatsModal, flipGap * 5 + 550 + 2000);
+        }
+        if (word == answer) {
             setTimeout(() => toastWithMessage(`congrats-${window.pastGuesses.length}`), flipGap * 5 + 550);
             setTimeout(() => bounceWord(window.pastGuesses.length - 1), flipGap * 5 + 550);
-            setTimeout(showStatsModal, flipGap * 5 + 550 + 2000);
         }
     }
     if (row == 5 && word != answer) {
-        showAnswer();
+        setTimeout(showAnswer, letterFlipDelay * 5 + 550);
+    }
+    if (word == answer) {
+        setTimeout(showStatsModal, letterFlipDelay * 5 + 550);
+    } else if (row == 5) {
+        setTimeout(showStatsModal, letterFlipDelay * 5 + 550 + 1000);
     }
 
     window.currentWordNumber++;
@@ -152,7 +160,6 @@ function guessWordInRow(word: string, answer: string, row: number, isInitialLoad
     window.currentlyGuessingWord = "";
 
     let answerLetters = answer;
-    const letterFlipDelay = isInitialLoad ? 100 : 300;
     for (let i = 0; i < 5; i++) {
         let letterElement = getLetterElement(row, i);
         clearLetter(letterElement, false);

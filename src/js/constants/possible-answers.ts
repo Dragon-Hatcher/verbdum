@@ -528,7 +528,6 @@ export let possibleAnswers = [
     "caeno",
     "dulce",
     "togae",
-    "ruere",
     "illic",
     "hiems",
     "pulla",

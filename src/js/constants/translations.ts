@@ -82,7 +82,7 @@ export const translations: TranslationSet = {
     },
     "toast-invalid-word": {
         "english": "Not in word list.",
-        "latin": "Non in inventāriō verbōrum.",
+        "latin": "Non in indice verbōrum.",
     },
     "toast-too-few-letters": {
         "english": "Not enough letters.",

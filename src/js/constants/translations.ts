@@ -18,7 +18,7 @@ export const translations: TranslationSet = {
     },
     "htp-1": {
         "english": "Guess the <b>VERBDUM</b> in 6 tries or fewer.",
-        "latin": "Inveni <b>VERBDUM</b> sex conatis.",
+        "latin": "Inveni <b>VERBDUM</b> sex conatibus.",
     },
     "htp-2": {
         "english": "Each guess must be a five letter Latin word.",

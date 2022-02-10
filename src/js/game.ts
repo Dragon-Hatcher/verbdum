@@ -2,6 +2,7 @@ import {verbdumForDay, verbdumForToday, verbdumIdForDay, verbdumIdForToday} from
 import {allowedGuesses} from "./constants/allowed-guesses";
 import {getCurrentNumber, getCurrentTextForId} from "./translate";
 import {showStatsModal} from "./modal";
+import {possibleAnswers} from "./constants/possible-answers";
 
 interface CustomWindow extends Window {
     currentWordNumber: number;
@@ -94,7 +95,8 @@ function toastWithMessage(messageId: string, fades: boolean = true) {
 function showAnswer() {
     let toastBag = document.getElementById("main-toast-bag");
     let toast = document.createElement("div");
-    toast.innerText = getCurrentTextForId("answer-was") + window.currentlyPlayingWord.toUpperCase();
+    let word = window.currentlyPlayingWord;
+    toast.innerHTML = getCurrentTextForId("answer-was") + `<a target="_blank" rel="noopener noreferrer" href="https://en.wiktionary.org/wiki/${word.toLowerCase()}#Latin">${word.toUpperCase()}</a>`;
     toast.classList.add("toast");
     toast.setAttribute("data-trans", "answer-was");
     toastBag.prepend(toast);

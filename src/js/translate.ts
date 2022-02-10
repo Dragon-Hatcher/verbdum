@@ -22,7 +22,8 @@ export function translatePage(language: "latin" | "english") {
             }
         } else {
             let text = translations[transId][language];
-            if (transId == "answer-was") text += window.currentlyPlayingWord.toUpperCase();
+            let word = window.currentlyPlayingWord;
+            if (transId == "answer-was") text += `<a target="_blank" rel="noopener noreferrer" href="https://en.wiktionary.org/wiki/${word.toLowerCase()}#Latin">${word.toUpperCase()}</a>`;
             translatable[i].innerHTML = text;
         }
     }

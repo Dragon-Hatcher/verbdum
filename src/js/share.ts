@@ -78,7 +78,7 @@ function getText(): string | null {
         };
 
         let emojis = colors.map(((row) => row.map((x) => emojiMap[x]).join(""))).join("\n");
-        let id = romanize(window.currentlyPlayingId - 19032);
+        let id = romanize(window.currentlyPlayingId - 754339);
         let attempts = window.pastGuesses.includes(window.currentlyPlayingWord) ? romanize(window.pastGuesses.length) : '-';
 
         return `verbdum ${id} ${attempts}/VI\n\n${emojis}`

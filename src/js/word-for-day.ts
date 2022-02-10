@@ -14,9 +14,7 @@ function randomizeWordOrder() {
 randomizeWordOrder();
 
 export function verbdumIdForDay(date: Date): number {
-    const millisInDay = 1000 * 60 * 60 * 24;
-    let time = date.getTime();
-    return Math.round(time / millisInDay);
+    return date.getFullYear() * 373 + date.getMonth() * 31 + date.getDay() + 100;
 }
 
 export function verbdumIdForToday(): number {

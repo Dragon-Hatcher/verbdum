@@ -45,6 +45,5 @@ export function showStatsModal() {
 }
 
 export function showThanksModal() {
-    console.log("Showing thanks");
     showModal(thanksModal);
 }

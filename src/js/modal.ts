@@ -14,13 +14,19 @@ let langSwitches = document.getElementsByClassName("lang-switch");
 for (let i = 0; i < langSwitches.length; i++) {
     langSwitches[i].addEventListener("click", toggleTranslation);
 }
+document.getElementById("thanks-link").addEventListener("click", (e: Event) => {
+    e.stopPropagation();
+    showThanksModal();
+});
 
 let helpModal = document.getElementById("help-modal");
 let statsModal = document.getElementById("stats-modal");
+let thanksModal = document.getElementById("thanks-modal");
 
 function hideAllModals() {
     helpModal.classList.remove("shown");
     statsModal.classList.remove("shown");
+    thanksModal.classList.remove("shown")
 }
 
 function showModal(modal: Element) {
@@ -30,12 +36,15 @@ function showModal(modal: Element) {
     modal.classList.add("shown");
 }
 
-
-
 export function showHelpModal() {
     showModal(helpModal);
 }
 
 export function showStatsModal() {
     showModal(statsModal);
+}
+
+export function showThanksModal() {
+    console.log("Showing thanks");
+    showModal(thanksModal);
 }

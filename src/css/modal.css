@@ -72,6 +72,11 @@
     height: 62px;
 }
 
+#thanks-link {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 450px) {
     .modal-content > .word-row {
         max-width: 270px;

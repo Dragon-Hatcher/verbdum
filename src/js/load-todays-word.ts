@@ -1,6 +1,6 @@
 import {loadGameForDate, updateStatsPage} from "./game";
 import {getCurrentNumber, getCurrentTextForId, loadPreferredLanguage, translatePage} from "./translate";
-import {showHelpModal} from "./modal";
+import {showHelpModal, showThanksModal} from "./modal";
 
 function startTimer(duration, display) {
     let start = Date.now(),

@@ -2,6 +2,7 @@ import {verbdumForDay, verbdumForToday, verbdumIdForDay, verbdumIdForToday} from
 import {allowedGuesses} from "./constants/allowed-guesses";
 import {getCurrentNumber, getCurrentTextForId} from "./translate";
 import {showStatsModal} from "./modal";
+import {possibleAnswers} from "./constants/possible-answers";
 
 interface CustomWindow extends Window {
     currentWordNumber: number;

@@ -17,7 +17,8 @@
     "staticPath": [
       "robots.txt",
       "site.webmanifest",
-      ".nojekyll"
+      ".nojekyll",
+      "CNAME"
     ]
   },
   "dependencies": {

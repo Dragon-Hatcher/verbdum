@@ -174,7 +174,10 @@ function guessWordInRow(word: string, answer: string, row: number, isInitialLoad
     }
     if (row == 5 && word != answer) {
         setTimeout(showAnswer, letterFlipDelay * 5 + 550);
+    } else if (row == 5 || word == answer) {
+        setTimeout(showAnswer, letterFlipDelay * 5 + 550 + 2000);
     }
+
     if (word == answer) {
         setTimeout(showStatsModal, letterFlipDelay * 5 + 550);
     } else if (row == 5) {

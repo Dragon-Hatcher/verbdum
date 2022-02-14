@@ -14,15 +14,22 @@ function randomizeWordOrder() {
 randomizeWordOrder();
 
 export function verbdumIdForDay(date: Date): number {
-    return date.getFullYear() * 373 + date.getMonth() * 31 + date.getDay() + 100;
+    // if (date < new Date(2022, 2, 15)) {
+    //     return date.getFullYear() * 373 + date.getMonth() * 31 + date.getDay() + 100;
+    // } else {
+        return dayjs(date).diff(dayjs(new Date(2022, 1, 8)), 'day');
+    // }
 }
+
+window.verbdumIdForDay = verbdumIdForDay;
+window.possibleAnswers = possibleAnswers;
 
 export function verbdumIdForToday(): number {
     return verbdumIdForDay(new Date());
 }
 
 export function verbdumForDay(date: Date): string {
-    return possibleAnswers[verbdumIdForDay(date) % possibleAnswers.length];
+    return possibleAnswers[(verbdumIdForDay(date) + 410) % possibleAnswers.length];
 }
 
 export function verbdumForToday(): string {

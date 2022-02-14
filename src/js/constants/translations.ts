@@ -14,7 +14,7 @@ export const translations: TranslationSet = {
     },
     "htp-title": {
         "english": "HOW TO PLAY",
-        "latin": "QUOMODO LUSUS EST",
+        "latin": "REGULAE LUDI",
     },
     "htp-1": {
         "english": "Guess the <b>VERBDUM</b> in 6 tries or fewer.",
@@ -26,7 +26,7 @@ export const translations: TranslationSet = {
     },
     "htp-3": {
         "english": "After each guess, the color of the tiles will change to show how close your guess was to the word.",
-        "latin": "Post quodque conatum, litterae tingentur ut demonstrent partes rectas conati.",
+        "latin": "Post quemque conatum, litterae tingentur ut demonstrent partes rectas conati.",
     },
     "htp-ex": {
         "english": "Examples",
@@ -74,7 +74,7 @@ export const translations: TranslationSet = {
     },
     "stat-dist": {
         "english": "GUESS DISTRIBUTION",
-        "latin": "DISTRIBŪTIО̄ CONATORUM",
+        "latin": "DISTRIBŪTIО̄ CONATUUM",
     },
     "stat-next": {
         "english": "NEXT VERBDUM",

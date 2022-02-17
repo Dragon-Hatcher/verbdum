@@ -315,4 +315,6 @@ export function loadGameForDate(date: Date) {
     clearGameBoard();
     clearKeyboard();
     loadGuesses(window.currentlyPlayingId);
+
+    console.log(`${window.currentlyPlayingId}: ${window.currentlyPlayingWord}`);
 }

@@ -26,7 +26,7 @@ export const translations: TranslationSet = {
     },
     "htp-3": {
         "english": "After each guess, the color of the tiles will change to show how close your guess was to the word.",
-        "latin": "Post quemque conatum, litterae tingentur ut demonstrent partes rectas conati.",
+        "latin": "Post quemque conatum, litterae tingentur ut demonstrent partes rectas conatūs.",
     },
     "htp-ex": {
         "english": "Examples",
@@ -34,11 +34,11 @@ export const translations: TranslationSet = {
     },
     "htp-ex-1": {
         "english": "The letter A is in the word and in the right place.",
-        "latin": "Littera A est in verbō et in locō propio.",
+        "latin": "Littera A est in verbō et in locō proprio.",
     },
     "htp-ex-2": {
         "english": "The letter T is in the word but not in the right place.",
-        "latin": "Littera T est in verbō sed non in locō propio.",
+        "latin": "Littera T est in verbō sed non in locō proprio.",
     },
     "htp-ex-3": {
         "english": "The letter E is not in the word.",

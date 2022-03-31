@@ -18,7 +18,8 @@
       "robots.txt",
       "site.webmanifest",
       ".nojekyll",
-      "CNAME"
+      "CNAME",
+      "sitemap.xml"
     ]
   },
   "dependencies": {

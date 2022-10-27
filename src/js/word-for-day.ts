@@ -21,6 +21,10 @@ export function verbdumIdForToday(): number {
     return verbdumIdForDay(new Date());
 }
 
+export function verbdumForId(id: number): string {
+    return possibleAnswers[(id <= 8 ? id + 410 : id) % possibleAnswers.length];
+}
+
 export function verbdumForDay(date: Date): string {
     let id = verbdumIdForDay(date);
     return possibleAnswers[(id <= 8 ? id + 410 : id) % possibleAnswers.length];

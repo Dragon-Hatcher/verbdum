@@ -1,4 +1,4 @@
-import {loadGameForDate, updateStatsPage} from "./game";
+import {loadGameForDate, loadId, updateStatsPage} from "./game";
 import {getCurrentNumber, getCurrentTextForId, loadPreferredLanguage, translatePage} from "./translate";
 import {showHelpModal, showThanksModal} from "./modal";
 
@@ -49,7 +49,13 @@ function checkShouldShowHelp() {
     }
 }
 
-loadGameForDate(new Date());
+let overrideId = document.location.search.match(/^\?([\d+])$/)?.[1];
+if (overrideId) {
+    loadId(+overrideId)
+} else {
+    loadGameForDate(new Date());
+
+}
 updateStatsPage();
 startTimer(getSecondsTillTomorrow(), document.getElementById("countdown-timer"));
 loadPreferredLanguage();

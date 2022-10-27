@@ -1,4 +1,4 @@
-import {verbdumForDay, verbdumForToday, verbdumIdForDay, verbdumIdForToday} from "./word-for-day";
+import {verbdumForDay, verbdumForId, verbdumForToday, verbdumIdForDay, verbdumIdForToday} from "./word-for-day";
 import {allowedGuesses} from "./constants/allowed-guesses";
 import {getCurrentNumber, getCurrentTextForId} from "./translate";
 import {showStatsModal} from "./modal";
@@ -315,4 +315,17 @@ export function loadGameForDate(date: Date) {
     clearGameBoard();
     clearKeyboard();
     loadGuesses(window.currentlyPlayingId);
+}
+
+export function loadId(id: number) {
+    window.currentWordNumber = 0;
+    window.currentLetterNumber = 0;
+    window.currentlyGuessingWord = "";
+    window.pastGuesses = [];
+    window.currentlyPlayingWord = verbdumForId(id);
+    window.currentlyPlayingId = id;
+    clearGameBoard();
+    clearKeyboard();
+    loadGuesses(window.currentlyPlayingId);
+
 }
